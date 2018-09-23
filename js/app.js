@@ -45,13 +45,13 @@ Player.prototype.render = function () {
 
 // Add handleInput method to the player constructor
 Player.prototype.handleInput = function (input) {
-    if (input === 'up' && this.y > this.moveVertical) {
+    if ((input === 'up' || input === 'K') && this.y > this.moveVertical) {
         this.y -= this.moveVertical;
-    } else if (input === 'left' && this.x > 0) {
+    } else if ((input === 'left' || input === 'H') && this.x > 0) {
         this.x -= this.moveHorizontal;
-    } else if (input === 'down' && this.y < this.moveVertical * 4) {
+    } else if ((input === 'down' || input === 'J') && this.y < this.moveVertical * 4) {
         this.y += this.moveVertical;
-    } else if (input === 'right' && this.x < this.moveHorizontal * 4) {
+    } else if ((input === 'right' || input === 'L') && this.x < this.moveHorizontal * 4) {
         this.x += this.moveHorizontal;
     }
 }
@@ -99,10 +99,16 @@ allEnemies.push(enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, 
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function (e) {
     var allowedKeys = {
+        // Arrow keys
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        // Vim movement keys (H,J, K, L)
+        72: 'H',
+        74: 'J',
+        75: 'K',
+        76: 'L'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
