@@ -35,6 +35,7 @@ function Player() {
     this.x = this.posX;
     this.y = this.posY;
     this.sprite = 'images/char-boy.png';
+    this.win = false;
 }
 
 // Add render method to the player constructor
@@ -57,12 +58,18 @@ Player.prototype.handleInput = function (input) {
 
 //added update method to the player object
 Player.prototype.update = function () {
-    // loop through all the enemies and check for collision
+    // loop through all the enemies and check for collision and win
     for (enemy of allEnemies) {
-        //console.log(enemy);
+        // Collision check here
         if((this.y === enemy.y) && ((enemy.x + enemy.move/2 > this.x) && (enemy.x < this.x + this.moveHorizontal/2))) {
             this.reset();
         }
+        // Check win
+        if(this.y === 60) {
+            this.win = true;
+
+        }
+
     }
 }
 
@@ -75,16 +82,18 @@ Player.prototype.reset = function () {
 // Creating an instance of the Player object
 const player = new Player();
 // Creating instances of the enemy object
-const enemy1 = new Enemy((-101 * 2), 0, 150);
-const enemy2 = new Enemy((-101), 83, 200);
-const enemy3 = new Enemy((-101), 0, 250);
-const enemy4 = new Enemy((-101), 83 * 2, 300);
-const enemy5 = new Enemy((-101 * 3), 83, 200);
-const enemy6 = new Enemy((-101), 83 * 2, 350);
-const enemy7 = new Enemy((-101 * 2), 83 * 1, 400);
+const enemy1 = new Enemy(-101, (83 * 0), 150);
+const enemy2 = new Enemy(-101, (83 * 2), 120);
+const enemy3 = new Enemy(-101, (83 * 0), 200);
+const enemy4 = new Enemy(-101, (83 * 2), 170);
+const enemy5 = new Enemy(-101, 83, 220);
+const enemy6 = new Enemy(-101, 83, 140);
+const enemy7 = new Enemy(-101, 83, 230);
+const enemy8 = new Enemy(-101, (83 * 0), 100);
+const enemy9 = new Enemy(-101, (83 * 2), 250);
 // creating an array of the enemy object
 const allEnemies = [];
-allEnemies.push(enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7);
+allEnemies.push(enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
