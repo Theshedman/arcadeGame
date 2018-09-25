@@ -1,11 +1,10 @@
-// Enemies our player must avoid
+// Enemy constructor
 var Enemy = function (x, y, speed) {
     this.x = x;
     this.y = y + 60;
     this.move = 101;
     this.speed = speed;
     this.resetMove = -this.move;
-    this.boundary = this.move * 5;
     this.sprite = 'images/enemy-bug.png';
 };
 
@@ -32,10 +31,11 @@ function Player() {
     this.moveHorizontal = 101;
     this.posX = this.moveHorizontal * 2;
     this.posY = (this.moveVertical * 4) + 60;
-    this.x = this.posX;
+    this.x = this.posX
     this.y = this.posY;
     this.sprite = 'images/char-boy.png';
-    this.win = false;
+    this.win = false; // check game win
+    this.count = 0; // level counter
 }
 
 // Add render method to the player constructor
@@ -45,7 +45,7 @@ Player.prototype.render = function () {
 
 // Add handleInput method to the player constructor
 Player.prototype.handleInput = function (input) {
-    if ((input === 'up' || input === 'K') && this.y > this.moveVertical) {
+    if ((input === 'up' || input === 'K') && this.y > 0) {
         this.y -= this.moveVertical;
     } else if ((input === 'left' || input === 'H') && this.x > 0) {
         this.x -= this.moveHorizontal;
@@ -61,17 +61,26 @@ Player.prototype.update = function () {
     // loop through all the enemies and check for collision and win
     for (enemy of allEnemies) {
         // Collision check here
-        if((this.y === enemy.y) && ((enemy.x + enemy.move/2 > this.x) && (enemy.x < this.x + this.moveHorizontal/2))) {
+        if ((this.y === enemy.y) && ((enemy.x + enemy.move / 2 > this.x) && (enemy.x < this.x + this.moveHorizontal / 2))) {
             this.reset();
         }
-        // Check win
-        if(this.y === 60) {
-            this.win = true;
+    }
 
-        }
+    // Check win and Reset player
+    if (this.y === -23) {
+        this.win = true;
+        this.count++;
+        this.y = this.posY;
+        console.log(this.win);
 
+        // New levels, alter enemies and their speed
+        updateLevel();
     }
 }
+
+window.addEventListener('DOMContentLoaded', function () {
+    console.log(player.y)
+})
 
 Player.prototype.reset = function () {
     // set the Player x and y to initial x and y
@@ -81,19 +90,70 @@ Player.prototype.reset = function () {
 
 // Creating an instance of the Player object
 const player = new Player();
-// Creating instances of the enemy object
-const enemy1 = new Enemy(-101, (83 * 0), 150);
-const enemy2 = new Enemy(-101, (83 * 2), 120);
-const enemy3 = new Enemy(-101, (83 * 0), 200);
-const enemy4 = new Enemy(-101, (83 * 2), 170);
-const enemy5 = new Enemy(-101, 83, 220);
-const enemy6 = new Enemy(-101, 83, 140);
-const enemy7 = new Enemy(-101, 83, 230);
-const enemy8 = new Enemy(-101, (83 * 0), 100);
-const enemy9 = new Enemy(-101, (83 * 2), 250);
 // creating an array of the enemy object
 const allEnemies = [];
-allEnemies.push(enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9);
+// Creating instances of the enemy object
+// let enemy1,
+//     enemy2,
+//     enemy3,
+//     enemy4,
+//     enemy5,
+//     enemy6,
+//     enemy7,
+//     enemy8,
+//     enemy9;
+let enemy;
+
+enemy = new Enemy(-101, (83 * 0), 135);
+allEnemies.push(enemy);
+enemy = new Enemy(-101, 83, 120);
+allEnemies.push(enemy);
+enemy = new Enemy(-101, (83 * 0), 200);
+allEnemies.push(enemy);
+enemy = new Enemy(-101, (83 * 2), 170);
+allEnemies.push(enemy);
+// allEnemies.push(enemy1, enemy2, enemy3, enemy4);
+
+// Create more enemies on new Levels
+function updateLevel() {
+    switch (player.count) {
+        // Level 2
+        case 5:
+            enemy = new Enemy(-101, 83, 85);
+            allEnemies.push(enemy);
+            break;
+
+            // Level 3
+        case 9:
+            enemy = new Enemy(-101, (83 * 2), 105);
+            allEnemies.push(enemy);
+            break;
+
+            // Level 4
+        case 12:
+            enemy = new Enemy(-101, (83 * 0), 125);
+            allEnemies.push(enemy);
+            break;
+
+            // Level 5
+        case 15:
+            enemy = new Enemy(-101,( 83 * 2), 195);
+            allEnemies.push(enemy);
+            break;
+
+            // Level 6
+        case 18:
+            enemy = new Enemy(-101, (83 * 2), 315);
+            allEnemies.push(enemy);
+            break;
+
+            // Level 7
+        case 21:
+        console.log("case 21");
+            enemy = new Enemy(-101, 83, 405);
+            allEnemies.push(enemy);
+    }
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
