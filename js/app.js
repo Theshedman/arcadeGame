@@ -1,3 +1,7 @@
+"use strict"
+
+let currentScore = 0; // This holds the current score
+
 // Enemy constructor
 var Enemy = function (x, y, speed) {
     this.x = x;
@@ -33,7 +37,7 @@ function Player() {
     this.posY = (this.moveVertical * 4) + 60;
     this.x = this.posX
     this.y = this.posY;
-    this.sprite = `images/char-princess-girl.png`;
+    this.sprite = `images/char-boy.png`;
     this.win = false; // check game win
     this.count = 0; // level counter
 }
@@ -46,7 +50,6 @@ Player.prototype.render = function () {
 // Change image of the player
 Player.prototype.changePlayerImage = function (playerImage) {
     this.sprite = `images/${playerImage}`;
-    console.log(this.sprite);
 }
 
 // Add handleInput method to the player constructor
@@ -64,6 +67,7 @@ Player.prototype.handleInput = function (input) {
 
 //added update method to the player object
 Player.prototype.update = function () {
+    const score = document.getElementById('score');
     // loop through all the enemies and check for collision and win
     for (enemy of allEnemies) {
         // Collision check here
@@ -71,6 +75,21 @@ Player.prototype.update = function () {
             // Play sound
             const collideSound = document.getElementById('collideSound');
             collideSound.play();
+            // Deduct score by 3
+            if (score.textContent <= 0) {
+                score.textContent = 0;
+            }
+            else {
+                score.textContent -= 3;
+            }
+
+            // show the thumbs-up image as a sign for win when the player crosses over the water
+            const lose = document.getElementById('lose');
+            lose.classList.remove('hide');
+            setTimeout(() => {
+                lose.classList.add('hide');
+            }, 750);
+
             // Reset player
             this.reset();
         }
@@ -78,20 +97,35 @@ Player.prototype.update = function () {
 
     // Check win and Reset player
     if (this.y === -23) {
-        this.win = true;
         this.count++;
         this.y = this.posY;
-        console.log(this.win);
+        // Update score by 5
+        currentScore += 3
+        score.textContent = currentScore;
+
+        // show the thumbs-up image as a sign for win when the player crosses over the water
+        const win = document.getElementById('win');
+        win.classList.remove('hide');
+        setTimeout(() => {
+            win.classList.add('hide');
+        }, 750);
+
+        // Play sound when the player wins (crosses over the water);
+        const winSound = document.getElementById('winSound');
+        winSound.play();
 
         // New levels, alter enemies and their speed
         updateLevel();
     }
 }
 
+// Show modal window for Game Instructions and Player Selection on page load
 const startModal = document.getElementById('startModalContainer');
 window.addEventListener('DOMContentLoaded', function () {
     if (startModal.classList.contains('hideModal')) {
-        startModal.classList.remove('hideModal');
+        setTimeout(() => {
+            startModal.classList.remove('hideModal');
+        }, 1500);
     }
 });
 
@@ -118,56 +152,115 @@ const player = new Player();
     const startGame = document.getElementById('startGame');
 
     function selectPlayer() {
+        const selected = document.getElementById('selectSound');
         players.addEventListener('click', function (e) {
             let selectedImg;
             if (e.target) {
                 selectedImg = e.target.dataset.img;
-                console.log(e.target);
             }
             switch (e.target) {
+                // Is char-boy selected?
                 case charBoy:
+                    // Show selected
                     charBoy.classList.add('selectedPlayer');
+                    // Remove selected
                     catGirl.classList.remove('selectedPlayer');
                     hornGirl.classList.remove('selectedPlayer');
                     pinkGirl.classList.remove('selectedPlayer');
                     princessGirl.classList.remove('selectedPlayer');
+                    // Play sound when a player is selected
+                    selected.play();
                     break;
+
+                    // Is char-cat-girl selected?
                 case catGirl:
+                    // Show selected
                     catGirl.classList.add('selectedPlayer');
+                    // Remove selected
                     charBoy.classList.remove('selectedPlayer');
                     hornGirl.classList.remove('selectedPlayer');
                     pinkGirl.classList.remove('selectedPlayer');
                     princessGirl.classList.remove('selectedPlayer');
+                    // Play sound when a player is selected
+                    selected.play();
                     break;
+
+                    // Is char-horn-girl selected?
                 case hornGirl:
+                    // Show selected
                     hornGirl.classList.add('selectedPlayer');
+                    // Remove selected
                     charBoy.classList.remove('selectedPlayer');
                     catGirl.classList.remove('selectedPlayer');
                     pinkGirl.classList.remove('selectedPlayer');
                     princessGirl.classList.remove('selectedPlayer');
+                    // Play sound when a player is selected
+                    selected.play();
                     break;
+
+                    // Is char-pink-girl selected?
                 case pinkGirl:
+                    // Show selected
                     pinkGirl.classList.add('selectedPlayer');
+                    // Remove selected
                     charBoy.classList.remove('selectedPlayer');
                     catGirl.classList.remove('selectedPlayer');
                     hornGirl.classList.remove('selectedPlayer');
                     princessGirl.classList.remove('selectedPlayer');
+                    // Play sound when a player is selected
+                    selected.play();
                     break;
+
+                    // Is char-princess-girl selected?
                 case princessGirl:
+                    // Show selected
                     princessGirl.classList.add('selectedPlayer');
+                    // Remove selected
                     charBoy.classList.remove('selectedPlayer');
                     catGirl.classList.remove('selectedPlayer');
                     hornGirl.classList.remove('selectedPlayer');
                     pinkGirl.classList.remove('selectedPlayer');
+                    // Play sound when a player is selected
+                    selected.play();
             }
+            // update the player sprite image
             player.changePlayerImage(selectedImg);
         }, false);
+
+        // Set the timer
+        const timer = document.getElementById('time');
+        let timeUpdate; //holds the setTimeout for the time
+        let hours = 0; //holds the hours
+        let minutes = 0; // holds the minutes
+        let seconds = 0; //holds the seconds
+
+        function time() {
+            seconds++;
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes >= 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+
+            timer.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+            timeCounter();
+        }
+
+        function timeCounter() {
+            timeUpdate = setTimeout(time, 1000);
+        }
+
         // Hide the instruction modal and start the game background sound on the click of the start button
         startGame.addEventListener('click', function () {
             startModal.classList.add('hideModal');
             bgSound.play();
             bgSound.loop = true;
             bgSound.preload = 'auto';
+            // Start timer
+            timeCounter();
         }, false);
     }
 
@@ -189,31 +282,35 @@ allEnemies.push(enemy);
 
 // Create more enemies on new Levels
 function updateLevel() {
+    const level = document.getElementById('level');
     const bgSound = document.getElementById('bgSound');
     switch (player.count) {
         // Level 2
         case 5:
             enemy = new Enemy(-101, 83, 85);
             allEnemies.push(enemy);
-            console.log(bgSound);
+            level.textContent = `Level: 2`;
             break;
 
             // Level 3
         case 9:
             enemy = new Enemy(-101, (83 * 2), 105);
             allEnemies.push(enemy);
+            level.textContent = `Level: 3`;
             break;
 
             // Level 4
         case 12:
             enemy = new Enemy(-101, (83 * 0), 125);
             allEnemies.push(enemy);
+            level.textContent = `Level: 4`;
             break;
 
             // Level 5
         case 15:
             enemy = new Enemy(-101, (83 * 2), 195);
             allEnemies.push(enemy);
+            level.textContent = `Level: 5`;
             break;
 
             // Level 6
@@ -222,13 +319,39 @@ function updateLevel() {
             allEnemies.push(enemy);
             bgSound.setAttribute('src', 'sounds/cautious-path-01.ogg');
             bgSound.play();
+            level.textContent = `Level: 6`;
             break;
 
             // Level 7
         case 21:
-            console.log("case 21");
             enemy = new Enemy(-101, 83, 405);
             allEnemies.push(enemy);
+            level.textContent = `Level: 7`;
+            break;
+
+            // Level 8
+        case 25:
+            allEnemies.pop();
+            level.textContent = `Level: 8`;
+            break;
+
+            // Level 9
+        case 29:
+            allEnemies.pop();
+            allEnemies.pop();
+            enemy = new Enemy(-101, (83 * 2), 300);
+            allEnemies.push(enemy);
+            level.textContent = `Level: 9`;
+            break;
+
+            // Level 10
+        case 34:
+            enemy = new Enemy(-101, (83 * 0), 265);
+            allEnemies.push(enemy);
+            enemy = new Enemy(-101, 83, 200);
+            allEnemies.push(enemy);
+            level.textContent = `Level: 10`;
+            break;
     }
 }
 

@@ -1,49 +1,64 @@
+html {
+    box-sizing: border-box;
+}
+
 body {
-    text-align: center;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
     padding: 0;
     margin: 0;
-    background: radial-gradient(#927741, #c587e4, #b410a1);
+    background: radial-gradient(#d3b16e, #c587e4, #cf62c3);
+}
+
+html,
+body {
+    min-width: 100%;
+    min-height: 100%;
 }
 
 #startModalContainer {
     min-height: 100%;
     min-width: 100%;
-  position: absolute;
+    position: absolute;
     top: 0;
     right: 0;
-    bottom: -120px;
+    bottom: 0;
     left: 0;
     z-index: 1;
-  background: rgba(0, 0, 0, 0.26);
+    background: rgba(0, 0, 0, 0.46);
 }
 
 #startModalContent {
-    width: 75%;
+    width: 65%;
     background-color: #fff;
     margin: auto;
     margin-top: 0;
     font-size: 1.2em;
+    text-align: center;
 }
 
 #startModalContent h1 {
     color: green;
+    margin: 0;
+    padding: 0;
 }
 
 #startModalContent h2 {
     color: #fff;
     background-color: seagreen;
+    margin: 0;
+    padding: 0;
 }
 
 #startModalContent h3 {
     color: sienna;
+    margin: 0;
+    padding: 0;
 }
 
 #startModalContent ol {
     text-align: justify;
-}
-
-#startModalContent ol li {
-    margin: 7px;
 }
 
 #startModalContent #players {
@@ -57,12 +72,12 @@ body {
 img {
     display: block;
     height: 150px;
-    margin-top: -45px;
+    margin-top: -50px;
 }
 
 .selectedPlayer {
     border-bottom: 8px solid #a00000;
-    margin-bottom: 20px;
+    margin-bottom: 7px;
 }
 
 #startGame {
@@ -76,4 +91,34 @@ img {
 
 .hideModal {
     display: none;
+}
+
+.scoreBoard {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: Orbitron;
+    width: 505px;
+    padding: 0;
+    margin-top: 25px;
+    margin-bottom: -45px;
+    font-size: 1.4em;
+    background-color: #fff;
+    box-shadow: 3px 4px 7px rgba(0, 0, 0, 0.26), -3px -4px 7px rgba(0, 0, 0, 0.26), 3px -4px 7px rgba(0, 0, 0, 0.26);
+}
+
+#playSound,
+#muteSound {
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+#message img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin: auto;
 }
