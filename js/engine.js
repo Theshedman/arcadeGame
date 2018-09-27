@@ -22,7 +22,8 @@ var Engine = (function (global) {
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
-        lastTime;
+        lastTime,
+        requestWin; // Holds the requested animation frame so that I will be able to cancel it when the game is over
 
     canvas.width = 505;
     canvas.height = 606;
@@ -55,7 +56,16 @@ var Engine = (function (global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+        requestWin =
+            win.requestAnimationFrame(main);
+            // Cancel the Animation Frame when then game reaches Level 10;
+        if (level.textContent === `Level: 10`) {
+            cancelAnimationFrame(requestWin);
+        }
+        // Else request for the anima
+        else {
+            window.requestWin;
+        }
     }
 
     /* This function does some initial setup that should only occur once,
@@ -174,7 +184,7 @@ var Engine = (function (global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        
+
         // Added more images to be loaded.
         'images/char-cat-girl.png',
         'images/char-princess-girl.png',

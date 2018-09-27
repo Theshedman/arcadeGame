@@ -17,7 +17,8 @@ body {
     min-height: 100%;
 }
 
-#startModalContainer {
+#startModalContainer,
+#congratsModalWrapper {
     min-height: 100%;
     min-width: 100%;
     position: absolute;
@@ -29,7 +30,8 @@ body {
     background: rgba(0, 0, 0, 0.46);
 }
 
-#startModalContent {
+#startModalContent,
+#congratsModal {
     width: 65%;
     background-color: #fff;
     margin: auto;
@@ -43,15 +45,18 @@ body {
     0% {
         transform: scale(0.45);
     }
+
     50% {
         transform: scale(0.65);
     }
+
     100% {
         transform: scale(1);
     }
 }
 
-#startModalContent h1 {
+#startModalContent h1,
+#congratsModal h2 {
     color: green;
     margin: 0;
     padding: 0;
@@ -77,20 +82,31 @@ body {
 #startModalContent #players {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    width: 75%;
-    margin: auto;
+    justify-content: space-evenly;
 }
 
-img {
+@media screen and (max-width: 675px) {
+    #startModalContent,
+    #congratsModal {
+        width: 85%;
+    }
+}
+
+@media screen and (max-width: 498px) {
+    #startModalContent,
+    #congratsModal {
+        width: 100%;
+    }
+}
+
+#startModalContent img {
     display: block;
-    height: 150px;
-    margin-top: -50px;
+    height: 70px;
+    cursor: pointer;
 }
 
 .selectedPlayer {
-    border-bottom: 8px solid #a00000;
-    margin-bottom: 7px;
+    border-bottom: 3px solid #3dc200be;
 }
 
 #startGame {
@@ -120,9 +136,9 @@ img {
     box-shadow: 3px 4px 7px rgba(0, 0, 0, 0.26), -3px -4px 7px rgba(0, 0, 0, 0.26), 3px -4px 7px rgba(0, 0, 0, 0.26);
 }
 
-#playSound,
-#muteSound {
-    cursor: pointer;
+div#playSound,
+div#muteSound {
+    color: green;
 }
 
 .hide {
@@ -134,4 +150,26 @@ img {
     height: 35px;
     border-radius: 50%;
     margin: auto;
+}
+
+#congratsModal {
+    margin: 25% auto;
+}
+
+section.summary {
+    font-family: Orbitron;
+    box-shadow: 3px 4px 7px rgba(0, 0, 0, 0.26), -3px -4px 7px rgba(0, 0, 0, 0.26), 3px -4px 7px rgba(0, 0, 0, 0.26);
+    width: 45%;
+    padding: 10px;
+    margin: 8px auto;
+    background: radial-gradient(#d3b16e, #c587e4, #cf62c3);
+    color: #fff;
+}
+
+#replay,
+#repo {
+    background-color: seagreen;
+    color: #fff;
+    padding: 5px;
+    margin-bottom: 8px;
 }

@@ -1,6 +1,11 @@
 "use strict"
 
 let currentScore = 0; // This holds the current score
+const level = document.getElementById('level');
+const bgSound = document.getElementById('bgSound');
+const score = document.getElementById('score');
+const timer = document.getElementById('time');
+let timeUpdate; //holds the setTimeout for the time
 
 // Enemy constructor
 var Enemy = function (x, y, speed) {
@@ -67,7 +72,6 @@ Player.prototype.handleInput = function (input) {
 
 //added update method to the player object
 Player.prototype.update = function () {
-    const score = document.getElementById('score');
     // loop through all the enemies and check for collision and win
     for (enemy of allEnemies) {
         // Collision check here
@@ -78,8 +82,7 @@ Player.prototype.update = function () {
             // Deduct score by 3
             if (score.textContent <= 0) {
                 score.textContent = 0;
-            }
-            else {
+            } else {
                 score.textContent -= 3;
             }
 
@@ -116,6 +119,9 @@ Player.prototype.update = function () {
 
         // New levels, alter enemies and their speed
         updateLevel();
+
+        // Show Modal on game over
+        congratulations();
     }
 }
 
@@ -148,7 +154,6 @@ const player = new Player();
     const hornGirl = document.querySelector('img[data-img="char-horn-girl.png"]');
     const pinkGirl = document.querySelector('img[data-img="char-pink-girl.png"]');
     const princessGirl = document.querySelector('img[data-img="char-princess-girl.png"]');
-    const bgSound = document.getElementById('bgSound');
     const startGame = document.getElementById('startGame');
 
     function selectPlayer() {
@@ -228,8 +233,6 @@ const player = new Player();
         }, false);
 
         // Set the timer
-        const timer = document.getElementById('time');
-        let timeUpdate; //holds the setTimeout for the time
         let hours = 0; //holds the hours
         let minutes = 0; // holds the minutes
         let seconds = 0; //holds the seconds
@@ -282,8 +285,6 @@ allEnemies.push(enemy);
 
 // Create more enemies on new Levels
 function updateLevel() {
-    const level = document.getElementById('level');
-    const bgSound = document.getElementById('bgSound');
     switch (player.count) {
         // Level 2
         case 5:
@@ -373,3 +374,41 @@ document.addEventListener('keyup', function (e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// Game ends on Level 10. Show the player a congratulatory modal
+function congratulations() {
+    const congratsModal = document.getElementById('congratsModalWrapper');
+    const timeSum = document.getElementById('timeSum');
+    const scoreSum = document.getElementById('scoreSum');
+    const levelSum = document.getElementById('levelSum');
+    const congratSound = document.getElementById('congratSound');
+    const replay = document.getElementById('replay');
+    const repo = document.getElementById('repo');
+
+    if (level.textContent === `Level: 10`) {
+        // Update Sound
+        bgSound.pause();
+        congratSound.play();
+
+        // Pause Timer
+        clearTimeout(timeUpdate);
+
+        // Show modal
+        congratsModal.classList.remove('hideModal');
+        // Update the modal summary details
+        timeSum.textContent =`Time ${timer.textContent}`;
+        scoreSum.textContent =  `Score: ${score.textContent}`;
+        levelSum.textContent = level.textContent;
+
+        // Reload Game
+        replay.addEventListener('click', function() {
+            document.location.reload(true);
+        }, false);
+
+        // Visit github repository for the game
+        repo.addEventListener('click', function() {
+            const repository = `https://github.com/Theshedman/arcadeGame`
+            window.location.assign(repository);
+        }, false);
+    }
+}

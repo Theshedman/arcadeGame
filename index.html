@@ -40,6 +40,7 @@
       </audio>
       <audio src="sounds/ta-da.wav" id="winSound"></audio>
       <audio src="sounds/select.wav" id="selectSound"></audio>
+      <audio src="sounds/congrats.wav" id="congratSound"></audio>
     </div>
     <div class="scoreBoard">
       <div id="timer">&#128338; <span id="time">00:00:00</span></div>
@@ -52,6 +53,18 @@
       <div id="playSound">&#128266;</div>
       <div id="muteSound" class="hide">
         &#128263;</div>
+    </div>
+    <div id="congratsModalWrapper" class="hideModal">
+      <div id="congratsModal">
+        <h2>Congratulations!!!</h2>
+        <section class="summary">
+          <div id="timeSum"></div>
+          <div id="scoreSum"></div>
+          <div id="levelSum"></div>
+        </section>
+        <button id="replay">Play Again</button>
+        <button id="repo">Github Repo</button>
+      </div>
     </div>
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
