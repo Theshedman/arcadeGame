@@ -33,14 +33,20 @@ function Player() {
     this.posY = (this.moveVertical * 4) + 60;
     this.x = this.posX
     this.y = this.posY;
-    this.sprite = 'images/char-boy.png';
+    this.sprite = `images/char-princess-girl.png`;
     this.win = false; // check game win
     this.count = 0; // level counter
 }
 
 // Add render method to the player constructor
 Player.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// Change image of the player
+Player.prototype.changePlayerImage = function (playerImage) {
+    this.sprite = `images/${playerImage}`;
+    console.log(this.sprite);
 }
 
 // Add handleInput method to the player constructor
@@ -62,6 +68,10 @@ Player.prototype.update = function () {
     for (enemy of allEnemies) {
         // Collision check here
         if ((this.y === enemy.y) && ((enemy.x + enemy.move / 2 > this.x) && (enemy.x < this.x + this.moveHorizontal / 2))) {
+            // Play sound
+            const collideSound = document.getElementById('collideSound');
+            collideSound.play();
+            // Reset player
             this.reset();
         }
     }
@@ -78,9 +88,12 @@ Player.prototype.update = function () {
     }
 }
 
+const startModal = document.getElementById('startModalContainer');
 window.addEventListener('DOMContentLoaded', function () {
-    console.log(player.y)
-})
+    if (startModal.classList.contains('hideModal')) {
+        startModal.classList.remove('hideModal');
+    }
+});
 
 Player.prototype.reset = function () {
     // set the Player x and y to initial x and y
@@ -90,20 +103,81 @@ Player.prototype.reset = function () {
 
 // Creating an instance of the Player object
 const player = new Player();
+
+/**
+ * Allow the user to choose an image for the player
+ */
+(function () {
+    const players = document.getElementById('players');
+    const charBoy = document.querySelector('img[data-img="char-boy.png"]');
+    const catGirl = document.querySelector('img[data-img="char-cat-girl.png"]');
+    const hornGirl = document.querySelector('img[data-img="char-horn-girl.png"]');
+    const pinkGirl = document.querySelector('img[data-img="char-pink-girl.png"]');
+    const princessGirl = document.querySelector('img[data-img="char-princess-girl.png"]');
+    const bgSound = document.getElementById('bgSound');
+    const startGame = document.getElementById('startGame');
+
+    function selectPlayer() {
+        players.addEventListener('click', function (e) {
+            let selectedImg;
+            if (e.target) {
+                selectedImg = e.target.dataset.img;
+                console.log(e.target);
+            }
+            switch (e.target) {
+                case charBoy:
+                    charBoy.classList.add('selectedPlayer');
+                    catGirl.classList.remove('selectedPlayer');
+                    hornGirl.classList.remove('selectedPlayer');
+                    pinkGirl.classList.remove('selectedPlayer');
+                    princessGirl.classList.remove('selectedPlayer');
+                    break;
+                case catGirl:
+                    catGirl.classList.add('selectedPlayer');
+                    charBoy.classList.remove('selectedPlayer');
+                    hornGirl.classList.remove('selectedPlayer');
+                    pinkGirl.classList.remove('selectedPlayer');
+                    princessGirl.classList.remove('selectedPlayer');
+                    break;
+                case hornGirl:
+                    hornGirl.classList.add('selectedPlayer');
+                    charBoy.classList.remove('selectedPlayer');
+                    catGirl.classList.remove('selectedPlayer');
+                    pinkGirl.classList.remove('selectedPlayer');
+                    princessGirl.classList.remove('selectedPlayer');
+                    break;
+                case pinkGirl:
+                    pinkGirl.classList.add('selectedPlayer');
+                    charBoy.classList.remove('selectedPlayer');
+                    catGirl.classList.remove('selectedPlayer');
+                    hornGirl.classList.remove('selectedPlayer');
+                    princessGirl.classList.remove('selectedPlayer');
+                    break;
+                case princessGirl:
+                    princessGirl.classList.add('selectedPlayer');
+                    charBoy.classList.remove('selectedPlayer');
+                    catGirl.classList.remove('selectedPlayer');
+                    hornGirl.classList.remove('selectedPlayer');
+                    pinkGirl.classList.remove('selectedPlayer');
+            }
+            player.changePlayerImage(selectedImg);
+        }, false);
+        // Hide the instruction modal and start the game background sound on the click of the start button
+        startGame.addEventListener('click', function () {
+            startModal.classList.add('hideModal');
+            bgSound.play();
+            bgSound.loop = true;
+            bgSound.preload = 'auto';
+        }, false);
+    }
+
+    selectPlayer();
+}());
+
 // creating an array of the enemy object
 const allEnemies = [];
 // Creating instances of the enemy object
-// let enemy1,
-//     enemy2,
-//     enemy3,
-//     enemy4,
-//     enemy5,
-//     enemy6,
-//     enemy7,
-//     enemy8,
-//     enemy9;
 let enemy;
-
 enemy = new Enemy(-101, (83 * 0), 135);
 allEnemies.push(enemy);
 enemy = new Enemy(-101, 83, 120);
@@ -112,15 +186,16 @@ enemy = new Enemy(-101, (83 * 0), 200);
 allEnemies.push(enemy);
 enemy = new Enemy(-101, (83 * 2), 170);
 allEnemies.push(enemy);
-// allEnemies.push(enemy1, enemy2, enemy3, enemy4);
 
 // Create more enemies on new Levels
 function updateLevel() {
+    const bgSound = document.getElementById('bgSound');
     switch (player.count) {
         // Level 2
         case 5:
             enemy = new Enemy(-101, 83, 85);
             allEnemies.push(enemy);
+            console.log(bgSound);
             break;
 
             // Level 3
@@ -137,7 +212,7 @@ function updateLevel() {
 
             // Level 5
         case 15:
-            enemy = new Enemy(-101,( 83 * 2), 195);
+            enemy = new Enemy(-101, (83 * 2), 195);
             allEnemies.push(enemy);
             break;
 
@@ -145,11 +220,13 @@ function updateLevel() {
         case 18:
             enemy = new Enemy(-101, (83 * 2), 315);
             allEnemies.push(enemy);
+            bgSound.setAttribute('src', 'sounds/cautious-path-01.ogg');
+            bgSound.play();
             break;
 
             // Level 7
         case 21:
-        console.log("case 21");
+            console.log("case 21");
             enemy = new Enemy(-101, 83, 405);
             allEnemies.push(enemy);
     }

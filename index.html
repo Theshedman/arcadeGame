@@ -1,14 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Effective JavaScript: Frogger</title>
+    <link rel="shortcut icon" href="images/char-cat-girl.png" type="image/x-icon">
+    <title>Arcade Game</title>
     <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+  </head>
+
+  <body>
+    <div id="startModalContainer" class="hideModal">
+      <div id="startModalContent">
+        <h1>INSTRUCTION</h1>
+        <p>The bugs are your enemies and you should avoid them. You loose when you hit the enemy. You win when you
+          cross over to the other end (water).</p>
+        <h2>Keyboard Keys</h2>
+        <ol>
+          <li>Move with the Arrow keys (up, down, left, right)</li>
+          <li>You can also move with VIM keys (H, J, K, L)</li>
+        </ol>
+        <h3>Choose a player</h3>
+        <div id="players">
+          <img class="selectedPlayer" src="images/char-boy.png" data-img="char-boy.png">
+          <img src="images/char-cat-girl.png" data-img="char-cat-girl.png">
+          <img src="images/char-horn-girl.png" data-img="char-horn-girl.png">
+          <img src="images/char-pink-girl.png" data-img="char-pink-girl.png">
+          <img src="images/char-princess-girl.png" data-img="char-princess-girl.png">
+        </div>
+        <button id="startGame">Start</button>
+      </div>
+    </div>
+    <div id="gameSound">
+      <audio id="bgSound" src="sounds/destination-01.ogg"></audio>
+      <audio id="collideSound">
+        <source src="sounds/collide.ogg" type="audio/ogg">
+        <source src="sounds/collide.wav" type="audio/wav">
+      </audio>
+    </div>
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
-</body>
+  </body>
+
 </html>
