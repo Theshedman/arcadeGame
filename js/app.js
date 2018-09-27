@@ -125,7 +125,7 @@ window.addEventListener('DOMContentLoaded', function () {
     if (startModal.classList.contains('hideModal')) {
         setTimeout(() => {
             startModal.classList.remove('hideModal');
-        }, 1500);
+        }, 850);
     }
 });
 
