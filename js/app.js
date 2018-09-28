@@ -86,7 +86,7 @@ Player.prototype.update = function () {
                 score.textContent -= 3;
             }
 
-            // show the thumbs-up image as a sign for win when the player crosses over the water
+            // show the thumbs-down image as a sign for lose when the player collides with the enemy-bug
             const lose = document.getElementById('lose');
             lose.classList.remove('hide');
             setTimeout(() => {
@@ -125,7 +125,7 @@ Player.prototype.update = function () {
     }
 }
 
-// Show modal window for Game Instructions and Player Selection on page load
+// Show modal window for Game Instructions and Player Selection on page load with the background sound playing
 const startModal = document.getElementById('startModalContainer');
 window.addEventListener('DOMContentLoaded', function () {
     if (startModal.classList.contains('hideModal')) {
@@ -160,6 +160,10 @@ const player = new Player();
         const selected = document.getElementById('selectSound');
         players.addEventListener('click', function (e) {
             let selectedImg;
+            // Play background sound
+            bgSound.play();
+            bgSound.loop = true;
+            bgSound.preload = 'auto';
             if (e.target) {
                 selectedImg = e.target.dataset.img;
             }
@@ -256,9 +260,10 @@ const player = new Player();
             timeUpdate = setTimeout(time, 1000);
         }
 
-        // Hide the instruction modal and start the game background sound on the click of the start button
+        // Hide the instruction modal and play background sound when the Start button is clicked
         startGame.addEventListener('click', function () {
             startModal.classList.add('hideModal');
+            // Play background sound
             bgSound.play();
             bgSound.loop = true;
             bgSound.preload = 'auto';
@@ -318,7 +323,7 @@ function updateLevel() {
         case 18:
             enemy = new Enemy(-101, (83 * 2), 315);
             allEnemies.push(enemy);
-            bgSound.setAttribute('src', 'sounds/cautious-path-01.ogg');
+            bgSound.setAttribute('src', 'sounds/destination-01.ogg');
             bgSound.play();
             level.textContent = `Level: 6`;
             break;
@@ -375,7 +380,6 @@ document.addEventListener('keyup', function (e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-// Game ends on Level 10. Show the player a congratulatory modal
 function congratulations() {
     const congratsModal = document.getElementById('congratsModalWrapper');
     const timeSum = document.getElementById('timeSum');

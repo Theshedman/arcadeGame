@@ -62,7 +62,7 @@ var Engine = (function (global) {
         if (level.textContent === `Level: 10`) {
             cancelAnimationFrame(requestWin);
         }
-        // Else request for the anima
+        // Else go on and request for the animation frame
         else {
             window.requestWin;
         }
