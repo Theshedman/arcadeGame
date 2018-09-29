@@ -400,17 +400,17 @@ function congratulations() {
         // Show modal
         congratsModal.classList.remove('hideModal');
         // Update the modal summary details
-        timeSum.textContent =`Time ${timer.textContent}`;
-        scoreSum.textContent =  `Score: ${score.textContent}`;
+        timeSum.textContent = `Time ${timer.textContent}`;
+        scoreSum.textContent = `Score: ${score.textContent}`;
         levelSum.textContent = level.textContent;
 
         // Reload Game
-        replay.addEventListener('click', function() {
+        replay.addEventListener('click', function () {
             document.location.reload(true);
         }, false);
 
         // Visit github repository for the game
-        repo.addEventListener('click', function() {
+        repo.addEventListener('click', function () {
             const repository = `https://github.com/Theshedman/arcadeGame`
             window.location.assign(repository);
         }, false);
