@@ -1,5 +1,8 @@
 "use strict"
 
+/**
+ * @description - global variables
+ */
 let currentScore = 0; // This holds the current score
 const level = document.getElementById('level');
 const bgSound = document.getElementById('bgSound');
@@ -7,7 +10,14 @@ const score = document.getElementById('score');
 const timer = document.getElementById('time');
 let timeUpdate; //holds the setTimeout for the time
 
-// Enemy constructor
+/**
+ * @function Enemy
+ * @description A constuctor function for
+ * the enemy bug object
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Number} speed
+ */
 var Enemy = function (x, y, speed) {
     this.x = x;
     this.y = y + 60;
@@ -17,8 +27,12 @@ var Enemy = function (x, y, speed) {
     this.sprite = 'images/enemy-bug.png';
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+/**
+ * @function - update
+ * @description - Update the enemy's position, required method for game
+ * Parameter: dt, a time delta between ticks
+ * @param {Number} dt
+ */
 Enemy.prototype.update = function (dt) {
     if (this.x < this.move * 5) {
         // increment the enemies speed by speed * dt
@@ -29,12 +43,17 @@ Enemy.prototype.update = function (dt) {
     }
 };
 
-// Draw the enemy on the screen, required method for game
+/**
+ * @description - Draw the enemy on the screen, required method for
+ */
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// The player constructor
+/**
+ * @function - Player
+ * @description - The player constructor
+ */
 function Player() {
     this.moveVertical = 83;
     this.moveHorizontal = 101;
