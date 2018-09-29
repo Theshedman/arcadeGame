@@ -3,6 +3,7 @@
 
 * [Instructions](#instructions)
 * [Implementation](#implementation)
+* [Demo](#demo)
 * [License](#license)
 
 ## Instructions
@@ -33,6 +34,9 @@ In the files, which we cloned from their github, they already taken care of the 
 All I did is to ready the comments in the files and then write out my code accordingly.
 
 To play the game, onpen the index.js in your browser and have fun.
+
+## Demo
+You are free to play the [Demo](https://theshedman.github.io/arcadeGame/)
 
 ## Licence
 **_Theshedman/arcadeGame_**  is licensed under the
