@@ -110,7 +110,7 @@ swipedetect(el, function(swipedir){
  * Else if it is left - the player should move left one block.
  */
 const canvas = document.getElementsByTagName('canvas')[0];
-swipedetect(canvas, function (swipedir) {
+canvas.addEventListener('touchstart', swipedetect(canvas, function (swipedir) {
   //swipedir contains either "none", "left", "right", "top", or "down"
   switch (swipedir) {
     case 'up':
@@ -135,4 +135,4 @@ swipedetect(canvas, function (swipedir) {
   }
   // Call the onTouch() to make sure the mouse events and touch events are the same in functionality
   onTouchu();
-});
+}), false);
