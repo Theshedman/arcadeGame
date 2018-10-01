@@ -173,3 +173,8 @@ section.summary {
     padding: 5px;
     margin-bottom: 8px;
 }
+
+canvas {
+    width: 85vw;
+    height: 85vh;
+}
