@@ -33,21 +33,23 @@ function moveTouch(e) {
 
   if (Math.abs(diffX) > Math.abs(diffY)) {
     // sliding horizontally
-    if (diffX > 0) {
+    if (diffX > 0 && player.x > 0) {
       // swiped left
-      player.moveHorizontal;
-    } else {
+      player.x -= 101;
+    }
+    if(diffX < 0 && player.x < 404) {
       // swiped right
-      player.x += player.moveHorizontal;
+      player.x += 101;
     }
   } else {
     // sliding vertically
-    if (diffY > 0) {
+    if (diffY > 0 && player.y > 0) {
       // swiped up
-      player.y -= player.moveVertical;
-    } else {
+      player.y -= 83;
+    }
+    if(diffY < 0 && player.y < 332) {
       // swiped down
-      player.y += player.moveVertical;
+      player.y += 83;
     }
   }
 
