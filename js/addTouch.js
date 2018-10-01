@@ -3,10 +3,8 @@
  *  Allow swipes (up, down, right, left
  */
 // Source: https://www.kirupa.com/html5/detecting_touch_swipe_gestures.htm
-const canvas = document.getElementsByTagName('canvas')[0];
-
-canvas.addEventListener("touchstart", startTouch, false);
-canvas.addEventListener("touchmove", moveTouch, false);
+document.addEventListener("touchstart", startTouch, false);
+document.addEventListener("touchmove", moveTouch, false);
 
 // Swipe Up / Down / Left / Right
 var initialX = null;
