@@ -11,12 +11,15 @@ var initialX = null;
 var initialY = null;
 
 function startTouch(e) {
+  e.preventDefault();
+
   initialX = e.touches[0].clientX;
   initialY = e.touches[0].clientY;
 };
 
 function moveTouch(e) {
   e.preventDefault();
+  
   if (initialX === null) {
     return;
   }
