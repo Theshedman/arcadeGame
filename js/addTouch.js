@@ -16,6 +16,7 @@ function startTouch(e) {
 };
 
 function moveTouch(e) {
+  e.preventDefault();
   if (initialX === null) {
     return;
   }
@@ -34,24 +35,22 @@ function moveTouch(e) {
     // sliding horizontally
     if (diffX > 0) {
       // swiped left
-      if (player.x > 0) player.x -= player.moveHorizontal;
+      player.moveHorizontal;
     } else {
       // swiped right
-      if (player.x < player.moveHorizontal * 4) player.x += player.moveHorizontal;
+      player.x += player.moveHorizontal;
     }
   } else {
     // sliding vertically
     if (diffY > 0) {
       // swiped up
-      if (player.y > 0) player.y -= player.moveVertical;
+      player.y -= player.moveVertical;
     } else {
       // swiped down
-      if (player.y < player.moveVertical * 4) player.y += player.moveVertical;
+      player.y += player.moveVertical;
     }
   }
 
   initialX = null;
   initialY = null;
-
-  e.preventDefault();
 };
