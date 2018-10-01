@@ -34,19 +34,19 @@ function moveTouch(e) {
     // sliding horizontally
     if (diffX > 0) {
       // swiped left
-      if (this.x > 0) this.x -= this.moveHorizontal;
+      if (player.x > 0) player.x -= player.moveHorizontal;
     } else {
       // swiped right
-      if (this.x < this.moveHorizontal * 4) this.x += this.moveHorizontal;
+      if (player.x < player.moveHorizontal * 4) player.x += player.moveHorizontal;
     }
   } else {
     // sliding vertically
     if (diffY > 0) {
       // swiped up
-      if (this.y > 0) this.y -= this.moveVertical;
+      if (player.y > 0) player.y -= player.moveVertical;
     } else {
       // swiped down
-      if (this.y < this.moveVertical * 4) this.y += this.moveVertical;
+      if (player.y < player.moveVertical * 4) player.y += player.moveVertical;
     }
   }
 
